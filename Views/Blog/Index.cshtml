@@ -1,5 +1,36 @@
-﻿@{
+﻿@using blogAfonina.ViewModels.Blog;
+@{
     ViewData["Title"] = "Blog";
 }
 
-<h1>something</h1>
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@model IEnumerable<PostItemViewModel>
+
+<form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route="default" method="post">
+    @foreach (var post in Model)
+    {
+        <div class="card">
+            <div class="card-header">@post.Author</div>
+            <div class="card-body">
+                <div class="card-title">@post.Title</div>
+                <p class="card-text">
+                    @post.Data
+                </p>
+            </div>
+            <div class="card-footer">@post.Created</div>
+        </div>
+    }
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="card-footer justify-content-center">
+            <button asp-action="AddPost" class="btn btn-primary btn-fill btn-lg">Add post</button>
+        </div>
+    }
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

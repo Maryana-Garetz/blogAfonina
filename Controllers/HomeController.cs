@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using blogAfonina.Models;
 using Microsoft.Extensions.Options;
-using blogAfonina.Options;
+using blogAfonina.DB;
 
 namespace blogAfonina.Controllers
 {
@@ -20,20 +20,14 @@ namespace blogAfonina.Controllers
         /// logger
         /// </summary>
         private readonly ILogger<HomeController> _logger;
-        /// <summary>
-        /// information about the server
-        /// </summary>
-        private readonly IOptions<ServerOptions> _serverOptions;
 
         /// <summary>
         /// class constructor <see cref="HomeController"/>
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="serverOptions">information about the server</param>
-        public HomeController(ILogger<HomeController> logger, IOptions<ServerOptions> serverOptions)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _serverOptions = serverOptions;
         }
 
         /// <summary>
@@ -60,7 +54,7 @@ namespace blogAfonina.Controllers
         /// <returns></returns>
         public IActionResult Blog()
         {
-            return new BlogController().Index();
+            return View();
         }
 
         /// <summary>
